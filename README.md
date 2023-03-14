@@ -31,7 +31,7 @@
         Build a movie client-side app with React as Front-End and using a REST API as Back-End.</p>
   <h2>Build With:</h2>
   <p>
-        React Redux React Bootstrap!</p>
+        React library/framework!</p>
 
 
   <h1>Movie API</h1>
