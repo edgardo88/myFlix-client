@@ -26,7 +26,7 @@
 
 <body>
   <div>
-  <h2>READme Documentation</h2>
+  <h2>READme Documentation for flix app</h2>
         <p>
         Build a movie client-side app with React as Front-End and using a REST API as Back-End.</p>
   <h2>Build With:</h2>
