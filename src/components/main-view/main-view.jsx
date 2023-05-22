@@ -9,17 +9,17 @@ export const MainView = () => {
     fetch("https://openlibrary.org/search.json?q=star+wars")
       .then((response) => response.json())
       .then((data) => {
-        const moviesFromApi = data.docs.map((doc) => {
+        const moviesFromApi = data.map((movie) => {
           return {
-            id: doc.key,
-            title: doc.title,
-            image:
-`https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg`,
-            author: doc.author_name?.[0]
+            Title: movie.Title,
+            ImageURL:movie.ImageURL,
+            Description: movie.Description,
+            Genre: movie.Genre,
+            Director:movie.Director
           };
         });
 
-        setBooks(moviesFromApi);
+        setMovies(moviesFromApi);
       });
   }, []);
 
@@ -39,8 +39,8 @@ export const MainView = () => {
         {movies.map((movie) => (
           <MovieCard
             movie={movie}
-            onMovieClick={(movie) => {
-              setSelectedMovie(movie);
+            onMovieClick={(newSelectedMovie) => {
+              setSelectedMovie(newSelectedMovie);
             }}
           />
         ))}
