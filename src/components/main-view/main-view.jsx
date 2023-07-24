@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from 'react';
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 
@@ -9,17 +9,17 @@ export const MainView = () => {
     fetch("https://openlibrary.org/search.json?q=star+wars")
       .then((response) => response.json())
       .then((data) => {
-        const moviesFromApi = data.map((movie) => {
+        const moviesFromApi = data.docs.map((doc) => {
           return {
-            Title: movie.Title,
-            ImageURL:movie.ImageURL,
-            Description: movie.Description,
-            Genre: movie.Genre,
-            Director:movie.Director
+            id: doc.key,
+            title: doc.title,
+            image:
+`https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg`,
+            author: doc.author_name?.[0]
           };
         });
 
-        setMovies(moviesFromApi);
+        setBooks(moviesFromApi);
       });
   }, []);
 

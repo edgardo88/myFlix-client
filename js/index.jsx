@@ -5,7 +5,7 @@ import { MainView } from "../src/components/main-view/main-view";
 import "./index.scss";
 
 // Main component (will eventually use all the others)
-const App = () => {
+export const App = () => {
   return (
     <MainView />
   );
