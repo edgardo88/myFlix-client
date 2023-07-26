@@ -19,7 +19,7 @@ export const MainView = () => {
           };
         });
 
-        setBooks(moviesFromApi);
+        setMovies(moviesFromApi);
       });
   }, []);
 
