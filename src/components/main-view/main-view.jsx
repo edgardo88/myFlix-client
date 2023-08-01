@@ -1,50 +1,60 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 
 export const MainView = () => {
-  const [movies, setMovies] = useState([]);
+    const [movies, setMovies] = useState([]);
 
-  useEffect(() => {
-    fetch("https://openlibrary.org/search.json?q=star+wars")
-      .then((response) => response.json())
-      .then((data) => {
-        const moviesFromApi = data.docs.map((doc) => {
-          return {
-            id: doc.key,
-            title: doc.title,
-            image:
-`https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg`,
-            author: doc.author_name?.[0]
-          };
-        });
+    useEffect(() => {
+        fetch("https://hora-flix-f4f11200119c.herokuapp.com/movies")
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("movies from api:", data);
+            const moviesFromApi = data.map((movie) => {
+                return {
+                    _id: movie._id,
+                    Title: movie.Title,
+                    ImagePath: movie.ImagePath,
+                    Director: {
+                        Name: movie.Director.Name,
+                        Bio: movie.Director.Bio,
+                        Birth: movie.Director.Birth,
+                        Death: movie.Director.Death
+                    },
+                    Description: movie.Description,
+                    ReleaseYear: movie.ReleaseYear,
+                    Genre: movie.Genre.Name
+                };
+            });
 
-        setMovies(moviesFromApi);
-      });
-  }, []);
+            setMovies(moviesFromApi);
+          });
+    }, []);
 
-  //a way to identify whether there was a user click (on a movie) or not
-  const [selectedMovie, setSelectedMovie] = useState(null);
+    const [selectedMovie, setSelectedMovie] = useState(null);
 
-  if (selectedMovie) {
-    return <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)}/>;
-  }
+    if (selectedMovie) {
+        return (
+            <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+        );
+    }
 
-  if (movies.length === 0) {
-    return <div>The list is empty!</div>;
-  }
+    if (movies.length === 0) {
+        return <div>The list is empty!</div>;
+    }
 
     return (
-      <div>
-        {movies.map((movie) => (
-          <MovieCard
-            movie={movie}
-            onMovieClick={(newSelectedMovie) => {
-              setSelectedMovie(newSelectedMovie);
-            }}
-          />
-        ))}
-      </div>
-    );
-  };
+        <div>
+            {movies.map((movie) => (
+                <MovieCard
+                  key={movie._id}
+                  movie={movie}
+                  onMovieClick={(newSelectedMovie) => {
+                    setSelectedMovie(newSelectedMovie);
+                  }}
+               />  
+            ))}
+       </div>
+    ); 
+};
     

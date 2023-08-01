@@ -1,29 +1,34 @@
+// Here you import the PropTypes library
 import PropTypes from "prop-types";
+import React from "react";
 
-export const MovieCard = ({ movie, onMovieClick }) => {
+// The MovieCard function component
+export const MovieCard = ({ movie, onMovieClick}) => {
     return (
-      <div
-        onClick={() => {
-          onMovieClick(movie);
+        <div
+         onClick={() => {
+            onMovieClick(movie);
         }}
       >
         {movie.Title}
-      </div>
+      </div>  
     );
-  };
-  
-  MovieCard.propTypes = {
-    movie: PropTypes.shape({
-      title: PropTypes.string,
-      description: PropTypes.string,
-    image: PropTypes.string,
-    genre: PropTypes.shape({
-        name: PropTypes.string,
-        description: PropTypes.string,
-      }).isRequired,
-      director: PropTypes.shape({
-        name: PropTypes.string,
-    }).isRequired 
-}).isRequired,
-    onMovieClick: PropTypes.func.isRequired
-  };
+};
+
+// Here is where we define all the props constraints for the MovieCard
+MovieCard.propTypes = {
+  movie: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    Title: PropTypes.string.isRequired,
+    ImagePath: PropTypes.string.isRequired,
+    Director: PropTypes.shape({
+      Name: PropTypes.string.isRequired,
+      Bio: PropTypes.string.isRequired,
+      Birth: PropTypes.string.isRequired,
+    }),
+    Description: PropTypes.string,
+    ReleaseYear: PropTypes.string,
+    Genre: PropTypes.string
+  }),
+  onMovieClick: PropTypes.func.isRequired
+};
