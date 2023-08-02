@@ -22,7 +22,6 @@ export const MainView = () => {
                         Death: movie.Director.Death
                     },
                     Description: movie.Description,
-                    ReleaseYear: movie.ReleaseYear,
                     Genre: movie.Genre.Name
                 };
             });
