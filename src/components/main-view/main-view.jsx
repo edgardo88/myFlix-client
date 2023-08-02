@@ -6,7 +6,7 @@ export const MainView = () => {
     const [movies, setMovies] = useState([]);
 
     useEffect(() => {
-        fetch("https://openlibrary.org/search.json?q=star+wars")
+        fetch("https://main--jovial-kulfi-355bdd.netlify.app/movies")
           .then((response) => response.json())
           .then((data) => {
             console.log("movies from api:", data);
