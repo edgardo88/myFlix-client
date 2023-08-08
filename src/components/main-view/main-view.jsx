@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card.jsx";
 import { MovieView } from "../movie-view/movie-view.jsx";
+import { LoginView } from "../login-view/login-view.jsx";
 
 export const MainView = () => {
     const [movies, setMovies] = useState([]);
+    const [user, setUser] = useState(null);
+    const [selectedMovie, setSelectedMovie] = useState(null);
 
     useEffect(() => {
         fetch ("https://og-oyin.onrender.com/movies")
@@ -30,7 +33,9 @@ export const MainView = () => {
           });
     }, []);
 
-    const [selectedMovie, setSelectedMovie] = useState(null);
+    if (!user) {
+        return <LoginView />;
+      }
 
     if (selectedMovie) {
         return (
