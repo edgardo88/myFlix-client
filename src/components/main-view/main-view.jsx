@@ -6,7 +6,7 @@ export const MainView = () => {
     const [movies, setMovies] = useState([]);
 
     useEffect(() => {
-        fetch("https://main--jovial-kulfi-355bdd.netlify.app/movies")
+        fetch("https://og-oyin.onrender.com/movies")
           .then((response) => response.json())
           .then((data) => {
             console.log("movies from api:", data);
