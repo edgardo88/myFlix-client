@@ -17,7 +17,7 @@ export const MainView = () => {
                 return {
                     _id: movie._id,
                     Title: movie.Title,
-                    ImagePath: movie.ImagePath,
+                    ImageURL: movie.ImageURL,
                     Director: movie.Director.Name,
                     Description: movie.Description,
                     Genre: movie.Genre.Name
@@ -28,9 +28,9 @@ export const MainView = () => {
           });
     }, []);
 
-    if (!user) {
-        return <LoginView />;
-      }
+  //  if (!user) {
+   //     return <LoginView />;
+   //   }
 
     if (selectedMovie) {
         return (
@@ -53,11 +53,9 @@ export const MainView = () => {
                   }}
                />  
             ))}
+                    <div><button onClick={() => { setUser(null); }}>Logout</button></div>
+
        </div>
     ); 
-
-    return(
-        <div><button onClick={() => { setUser(null); }}>Logout</button></div>
-    )
 };
     
