@@ -15,7 +15,7 @@ export const MainView = () => {
             console.log("movies from api:", data);
             const moviesFromApi = data.map((movie) => {
                 return {
-                    _id: movie._id.$oid,
+                    _id: movie._id,
                     Title: movie.Title,
                     ImagePath: movie.ImagePath,
                     Director: movie.Director.Name,
@@ -55,5 +55,9 @@ export const MainView = () => {
             ))}
        </div>
     ); 
+
+    return(
+        <div><button onClick={() => { setUser(null); }}>Logout</button></div>
+    )
 };
     
