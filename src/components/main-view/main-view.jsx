@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-import { MovieCard } from "../movie-card/movie-card.jsx";
 import { MovieView } from "../movie-view/movie-view.jsx";
 import { LoginView } from "../login-view/login-view.jsx";
 
@@ -17,8 +15,8 @@ export const MainView = () => {
                 return {
                     _id: movie._id,
                     Title: movie.Title,
-                    ImageURL: movie.ImageURL,
-                    Director: movie.Director.Name,
+                    ImagePath: movie.ImagePath,
+                    Director:  movie.Director.Name,
                     Description: movie.Description,
                     Genre: movie.Genre.Name
                 };
@@ -28,9 +26,9 @@ export const MainView = () => {
           });
     }, []);
 
-  //  if (!user) {
-   //     return <LoginView />;
-   //   }
+    if (!user) {
+        return <LoginView onLoggedIn={(user) => setUser(user)} />;
+      }
 
     if (selectedMovie) {
         return (
@@ -53,7 +51,7 @@ export const MainView = () => {
                   }}
                />  
             ))}
-                    <div><button onClick={() => { setUser(null); }}>Logout</button></div>
+             <button onClick={() => { setUser(null); }}>Logout</button>
 
        </div>
     ); 
