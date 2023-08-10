@@ -27650,7 +27650,7 @@ const LoginView = ({ onLoggedIn })=>{
         Username: username,
         Password: password
     };
-    fetch("https://og-oyin.onrender.com//login", {
+    fetch("https://og-oyin.onrender.com/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
