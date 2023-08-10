@@ -1,14 +1,25 @@
 import { MovieView } from "../movie-view/movie-view.jsx";
 import { useState, useEffect } from "react";
 import { LoginView } from "../login-view/login-view.jsx";
+import { SignupView } from "../signup-view/signup-view.jsx";
 
 export const MainView = () => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const storedToken = localStorage.getItem("token");
     const [movies, setMovies] = useState([]);
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(storedUser? storedUser : null);
     const [selectedMovie, setSelectedMovie] = useState(null);
+    const [token, setToken] = useState(storedToken? storedToken : null);
+
+  
 
     useEffect(() => {
-        fetch ("https://og-oyin.onrender.com/movies")
+        if (!token) {
+            return;
+          }
+        fetch ("https://og-oyin.onrender.com/movies", {
+            headers: { Authorization: `Bearer ${token}` }
+          })
           .then((response) => response.json())
           .then((data) => {
             console.log("movies from api:", data);
@@ -25,10 +36,19 @@ export const MainView = () => {
 
             setMovies(moviesFromApi);
           });
-    }, []);
+    }, [token]);
 
     if (!user) {
-        return <LoginView onLoggedIn={(user) => setUser(user)} />;
+        return (
+          <>
+            <LoginView onLoggedIn={(user, token) => {
+              setUser(user);
+              setToken(token);
+            }} />
+            or
+            <SignupView />
+          </>
+        );
       }
 
     if (selectedMovie) {
@@ -52,7 +72,7 @@ export const MainView = () => {
                   }}
                />  
             ))}
-             <button onClick={() => { setUser(null); }}>Logout</button>
+             <button onClick={() => { setUser(null); setToken(null);localStorage.clear(); }}>Logout</button>
 
        </div>
     ); 
