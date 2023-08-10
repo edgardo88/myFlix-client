@@ -1,4 +1,5 @@
 import { MovieView } from "../movie-view/movie-view.jsx";
+import { useState, useEffect } from "react";
 import { LoginView } from "../login-view/login-view.jsx";
 
 export const MainView = () => {
