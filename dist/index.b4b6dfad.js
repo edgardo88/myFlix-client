@@ -27645,9 +27645,7 @@ const LoginView = ({ onLoggedIn })=>{
     _s();
     const [username, setUsername] = (0, _react.useState)("");
     const [password, setPassword] = (0, _react.useState)("");
-    const handleSubmit = (event)=>{
-        event.preventDefault();
-    };
+    const handleSubmit = (event)=>{};
     const data = {
         Username: username,
         Password: password
