@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import { useState } from "react";
+import React, { useState } from 'react';
 
 export const LoginView = ({ onLoggedIn }) => {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSubmit = (event) => {}
-
+    const handleSubmit = (event) => {
+    event.preventDefault();
     const data = {
       Username: username,
       Password: password
@@ -34,6 +33,7 @@ export const LoginView = ({ onLoggedIn }) => {
       .catch((e) => {
         alert("Something went wrong");
       });
+    };
     
     return (
         <form onSubmit={handleSubmit}>
