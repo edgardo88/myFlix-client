@@ -5,9 +5,10 @@ import "./book-card.scss";
 
 
 export const MovieCard = ({ movie, onMovieClick }) => {
+  console.log('movie-card',movie)
   return (
     <Card className="h-100">
-      <Card.Img className="h-100" variant="top" src={movie.ImageURL} />
+      <Card.Img className="h-100" variant="top" src={movie.ImagePath} />
       <Card.Body>
         <Card.Title>{movie.Title}</Card.Title>
         <Card.Text>{movie.Director}</Card.Text>
@@ -21,14 +22,14 @@ export const MovieCard = ({ movie, onMovieClick }) => {
 
 // Here is where we define all the props constraints for the MovieCard
 MovieCard.propTypes = {
-  movie: PropTypes.shape({
+  movie: PropTypes.shape({              
     _id: PropTypes.string.isRequired,
     Title: PropTypes.string.isRequired,
-    ImageURL: PropTypes.string.isRequired,
+    ImagePath: PropTypes.string.isRequired,
     Director: PropTypes.shape({
       Name: PropTypes.string.isRequired,
-      Bio: PropTypes.string.isRequired,
-      Birth: PropTypes.string.isRequired,
+     // Bio: PropTypes.string.isRequired,
+     // Birth: PropTypes.string.isRequired,
     }),
     Description: PropTypes.string,
     ReleaseYear: PropTypes.string,
