@@ -11,7 +11,7 @@ export const MovieCard = ({ movie, onMovieClick }) => {
       <Card.Img className="h-100" variant="primary" src={movie.ImagePath} />
       <Card.Body>
         <Card.Title>{movie.Title}</Card.Title>
-        <Card.Text>{movie.Director}</Card.Text>
+        <Card.Text>{movie.Director.Name}</Card.Text>
         <Button  onClick={() => onMovieClick(movie)} variant="primary">
           Open
         </Button>
@@ -23,7 +23,7 @@ export const MovieCard = ({ movie, onMovieClick }) => {
 // Here is where we define all the props constraints for the MovieCard
 MovieCard.propTypes = {
   movie: PropTypes.shape({              
-    _id: PropTypes.string.isRequired,
+   //_id: PropTypes.string.isRequired,
     Title: PropTypes.string.isRequired,
     ImagePath: PropTypes.string.isRequired,
     Director: PropTypes.shape({

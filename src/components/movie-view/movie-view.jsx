@@ -9,9 +9,9 @@ export const MovieView = ({ movie, onBackClick }) => {
       <Card.Body>
         <Card.Title>Title: {movie.Title}<br/></Card.Title>
         <Card.Text>Description: {movie.Description}<br/></Card.Text>
-        <Card.Text>Director: {movie.Director}<br/></Card.Text>
-        <Card.Text>Genre: {movie.Genre}<br/></Card.Text>
-        <Card.Text>{movie.Genre.Description}</Card.Text>
+        <Card.Text>Director: {movie.Director.Name}<br/></Card.Text>
+        <Card.Text>Genre: {movie.Genre.Name}<br/></Card.Text>
+        <Card.Text>Genre Description: {movie.Genre.Description}<br/></Card.Text>
         <Button  onClick={onBackClick} className="back-button"style={{ cursor: "pointer" }}>
           Back
         </Button>

@@ -32,10 +32,14 @@ export const MainView = () => {
                     _id: movie._id,
                     Title: movie.Title,
                     ImagePath: movie.ImageURL,
-                    Director:  movie.Director.Name,
+                    Director:  {
+                      Name: movie.Director.Name,
+                    },
                     Description: movie.Description,
-                    Genre: movie.Genre.Name
-                    
+                    Genre: {
+                      Name: movie.Genre.Name,
+                      Description: movie.Genre.Description
+                    },
                 };
             });
 
@@ -76,10 +80,9 @@ export const MainView = () => {
     return (
         <div>
             {movies.map((movie) => (
-              <Row  className="justify-content-md-center">
-            <Col className="mb-5" key={movie._id} md={3}>
+              <Row  key={movie._id}className="justify-content-md-center">
+            <Col className="mb-5"  md={4}>
                 <MovieCard
-                  key={movie._id}
                   movie={movie}
                   onMovieClick={(newSelectedMovie) => {
                     setSelectedMovie(newSelectedMovie);
