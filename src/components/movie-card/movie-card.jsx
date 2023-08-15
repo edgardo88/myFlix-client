@@ -1,21 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Button, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import "./movie-card.scss";
 
 
-export const MovieCard = ({ movie }) => {
+export const MovieCard = ({ movie, onMovieClick }) => {
   console.log('movie-card',movie)
   return (
     <Card  style={{width: '18rem'}} >
-      <Card.Img className="h-100" variant="top" src={movie.ImagePath} />
+      <Card.Img className="h-100" variant="primary" src={movie.ImagePath} />
       <Card.Body>
         <Card.Title>{movie.Title}</Card.Title>
         <Card.Text>{movie.Director}</Card.Text>
-        <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
-          <Button variant="link">Open</Button>
-        </Link>
+        <Button  onClick={() => onMovieClick(movie)} variant="primary">
+          Open
+        </Button>
       </Card.Body>
     </Card>
   );

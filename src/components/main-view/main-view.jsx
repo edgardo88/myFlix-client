@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { LoginView } from "../login-view/login-view.jsx";
 import { SignupView } from "../signup-view/signup-view.jsx";
 import { MovieCard } from "../movie-card/movie-card.jsx";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
@@ -59,7 +58,7 @@ export const MainView = () => {
     if (selectedMovie) {
         return (
           <Row className="justify-content-md-center">
-          <Col  ClassName="mb-5 " md={3} style={{ border: "1px solid black" }}>
+          <Col  className="mb-5 " md={3} style={{ border: "1px solid black" }}>
           <MovieView
             style={{ border: "1px solid green" }}
             movie={selectedMovie}
@@ -78,7 +77,7 @@ export const MainView = () => {
         <div>
             {movies.map((movie) => (
               <Row  className="justify-content-md-center">
-            <Col ClassName="mb-5" key={movie.id} md={3}>
+            <Col className="mb-5" key={movie._id} md={3}>
                 <MovieCard
                   key={movie._id}
                   movie={movie}
@@ -94,6 +93,3 @@ export const MainView = () => {
        </div>
     ); 
 };
-    
-
-    
