@@ -76,7 +76,7 @@ export const MainView = () => {
     return (
         <div>
             {movies.map((movie) => (
-              <Row >
+              <Row  className="justify-content-md-center">
             <Col ClassName="mb-5" key={movie.id} md={3}>
                 <MovieCard
                   key={movie._id}
