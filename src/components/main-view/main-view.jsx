@@ -35,6 +35,7 @@ export const MainView = () => {
                     Director:  movie.Director.Name,
                     Description: movie.Description,
                     Genre: movie.Genre.Name
+                    
                 };
             });
 
@@ -56,13 +57,15 @@ export const MainView = () => {
 
     if (selectedMovie) {
         return (
-          <Col md={8} style={{ border: "1px solid black" }}>
+          <Row className="justify-content-md-center">
+          <Col  ClassName="mb-5 " md={3} style={{ border: "1px solid black" }}>
           <MovieView
             style={{ border: "1px solid green" }}
             movie={selectedMovie}
             onBackClick={() => setSelectedMovie(null)}
           />
         </Col>
+        </Row>
         );
     }
 
@@ -73,6 +76,7 @@ export const MainView = () => {
     return (
         <div>
             {movies.map((movie) => (
+              <Row >
             <Col ClassName="mb-5" key={movie.id} md={3}>
                 <MovieCard
                   key={movie._id}
@@ -82,6 +86,7 @@ export const MainView = () => {
                   }}
                />  
             </Col>
+            </Row>
             ))}
              <button onClick={() => { setUser(null); setToken(null);localStorage.clear(); }}>Logout</button>
 

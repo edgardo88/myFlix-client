@@ -1,31 +1,21 @@
 import './movie-view.scss';
+import { Button, Card } from "react-bootstrap";
 
 
 export const MovieView = ({ movie, onBackClick }) => {
   return (
-    <div>
-      <div>
-        <img src={movie.ImagePath} />
-      </div>
-      <div>
-        <span>Title: </span>
-        <span>{movie.Title}</span>
-      </div>
-      <div>
-        <p><span>Description: </span></p>
-        <span>{movie.Description}</span>
-      </div>
-      <div>
-        <p><span>Director: </span></p>
-        <span>{movie.Director}</span>
-      </div>
-      <div>
-        <p><span>Genre: </span></p>
-        <span>{movie.Genre}</span>
-        <p><span>Genre Description:</span></p>
-        <span>{movie.Genre.Description}</span>
-      </div>
-      <button onClick={onBackClick} className="back-button"style={{ cursor: "pointer" }}>Back</button>
-    </div>
+    <Card  style={{width: '18rem'}} >
+      <Card.Img className="h-100" variant="top" src={movie.ImagePath} />
+      <Card.Body>
+        <Card.Title>{movie.Title}</Card.Title>
+        <Card.Text>{movie.Description}</Card.Text>
+        <Card.Text>{movie.Director}</Card.Text>
+        <Card.Text>{movie.Genre}</Card.Text>
+        <Card.Text>{movie.Genre.Description}</Card.Text>
+        <Button  onClick={onBackClick} className="back-button"style={{ cursor: "pointer" }}>
+          Back
+        </Button>
+      </Card.Body>
+    </Card>
   );
 };
