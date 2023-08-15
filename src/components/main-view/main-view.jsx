@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { LoginView } from "../login-view/login-view.jsx";
 import { SignupView } from "../signup-view/signup-view.jsx";
 import { MovieCard } from "../movie-card/movie-card.jsx";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
