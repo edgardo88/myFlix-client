@@ -9,7 +9,7 @@ import {  Button,Card } from "react-bootstrap";
 export const MovieView = ({ movies }) => {
   const { movieId } = useParams();
 
-  const movie = movies.find((b) => b.id === movieId);
+  const movie = movies.find((b) => b._id === movieId);
 
   return (
     <Card  style={{width: '18rem'}} >

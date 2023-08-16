@@ -6,6 +6,7 @@ import { MovieCard } from "../movie-card/movie-card.jsx";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { NavigationBar } from "./navigation-bar/navigation-bar.jsx";
 
 
 export const MainView = () => {
@@ -50,6 +51,14 @@ export const MainView = () => {
 
     return (
       <BrowserRouter>
+      <NavigationBar
+                user={user}
+                onLoggedOut={(user) => {
+                    setUser(null);
+                    setToken(null);
+                    localStorage.clear();
+                }}
+            />
         <Row className="justify-content-md-center">
           <Routes>
             <Route
