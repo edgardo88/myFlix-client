@@ -7,6 +7,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { NavigationBar } from "./navigation-bar/navigation-bar.jsx";
+import { ProfileView } from "../profile-view/profile-view.jsx";
 
 
 export const MainView = () => {
@@ -16,6 +17,11 @@ export const MainView = () => {
     const [user, setUser] = useState(storedUser? storedUser : null);
     //const [selectedMovie, setSelectedMovie] = useState(null);
     const [token, setToken] = useState(storedToken? storedToken : null);
+
+    const updateUser = (user) => {
+      setUser(user);
+      localStorage.setItem("user", JSON.stringify(user));
+    };
 
   
 
@@ -84,13 +90,38 @@ export const MainView = () => {
                     <Navigate to="/" />
                   ) : (
                     <Col md={5}>
-                      <LoginView onLoggedIn={(user) => setUser(user)} />
+                      <LoginView
+                        onLoggedIn={(user, token) => {
+                          setUser(user);
+                          setToken(token);
+                        }} />
                     </Col>
                   )}
                 </>
   
               }
             />
+            <Route
+              path="/profile"
+              element={
+                !user ? (
+                  <Navigate to="/login" replace />
+                ) : (
+                  <ProfileView
+                    user={user}
+                    token={token}
+                    movies={movies}
+                    onLoggedOut={() => {
+                      setUser(null);
+                      setToken(null);
+                      localStorage.clear();
+                    }}
+                    updateUser={updateUser}
+                  />
+                )
+              }
+            />
+            
             <Route
               path="/movies/:movieId"
               element={
@@ -101,7 +132,9 @@ export const MainView = () => {
                     <Col>The list is empty!</Col>
                   ) : (
                     <Col md={8}>
-                      <MovieView movies={movies} />
+                      <MovieView movies={movies} user={user}
+                      token={token}
+                      updateUser={updateUser} />
                     </Col>
                   )}
                 </>
