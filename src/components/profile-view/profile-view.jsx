@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import {
- // Button,
+  Button,
   Container,
   Form,
-  //Row,
+  Row,
   Col,
   Card
   
@@ -39,7 +39,7 @@ export const ProfileView = ({
       Birthday: birthday,
     };
 
-    fetch(`https://og-oyin.onrender.com/users/${user.Username}`, {
+    fetch(`https://og-oyin.onrender.com/users/${user.id}`, {
       method: "PUT",
       body: JSON.stringify(data),
       headers: {
@@ -68,7 +68,7 @@ export const ProfileView = ({
 
   const deleteAccount = () => {
     console.log("doin");
-    fetch(`https://og-oyin.onrender.com/users/${user.Username}`, {
+    fetch(`https://og-oyin.onrender.com/users/${user.id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -88,12 +88,12 @@ export const ProfileView = ({
   return (
     <>
       <Col md={6}>
-        <Card className="mt-2 mb-3">
+        <Card >
           <Card.Body>
             <Card.Title>Your info</Card.Title>
             <p>Username: {user.Username}</p>
             <p>Email: {user.Email}</p>
-            <p>Birthdate: {user.Birthday.slice(0, 10)}</p>
+            <p>Birthdate: {user.Birthday}</p>
           </Card.Body>
         </Card>
         <Button

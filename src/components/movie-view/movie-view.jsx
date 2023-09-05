@@ -7,74 +7,65 @@ import {  Button,Card } from "react-bootstrap";
 import { useEffect, useState } from "react";
 
 
-export const MovieView = ({ movies, user, token, updateUser }) => {
+export const MovieView = ({ movies, user, /*token, setUser */}) => {
   const { movieId } = useParams();
 
-  const movie = movies.find((b) => b._id === movieId);
+  const [isFavorite, setIsFavorite] = useState(false);
 
-  const [isFavorite, setIsFavorite] = useState(
-    user.FavoriteMovies.includes(movie._id)
-  );
-  useEffect(() => {
-    setIsFavorite(user.FavoriteMovies.includes(movie._id));
-    window.scrollTo(0, 0);
-  }, [movieId]);
-
+  /* useEffect(() => {
+    const isFavorited = user.FavoriteMovies.includes(movieId);
+    setIsFavorite(isFavorited);
+  });
+*/
   const addFavorite = () => {
     fetch(
-      "https://og-oyin.onrender.com/users/" + user.Username +"/" + movie._id,
+      `https://og-oyin.onrender.com/users/${user.Username}/movies/${movieId}`,
       {
         method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }
     )
       .then((response) => {
         if (response.ok) {
           return response.json();
-        } else {
-          alert("Failed");
-          return false;
         }
       })
-      .then((user) => {
-        if (user) {
-          alert("Successfully added to favorites");
-          setIsFavorite(true);
-          updateUser(user);
-        }
-      })
-      .catch((e) => {
-        alert(e);
+      .then((data) => {
+        setIsFavorite(true);
+        user.Favorite.push(movieId);
+        localStorage.setItem("user", JSON.stringify(data));
+        setUser(user);
       });
   };
 
   const removeFavorite = () => {
     fetch(
-      "https://og-oyin.onrender.com/users/" + user.Username +"/" + movie._id,
+      `https://og-oyin.onrender.com/users/${user.Username}/movies/${movieId}`,
       {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }
     )
       .then((response) => {
         if (response.ok) {
           return response.json();
-        } else {
-          alert("Failed");
-          return false;
         }
       })
-      .then((user) => {
-        if (user) {
-          alert("Successfully deleted from favorites");
-          setIsFavorite(false);
-          updateUser(user);
-        }
-      })
-      .catch((e) => {
-        alert(e);
+      .then((data) => {
+        setIsFavorite(false);
+        user.Favorite = user.Favorite.filter((id) => id !== movieId);
+        localStorage.setItem("user", JSON.stringify(data));
+        setUser(user);
       });
   };
+  
+  const movie = movies.find((b) => b._id === movieId);
 
 
   return (
@@ -86,6 +77,16 @@ export const MovieView = ({ movies, user, token, updateUser }) => {
        <Card.Text>Director: {movie.Director.Name}<br/></Card.Text>
         <Card.Text>Genre: {movie.Genre.Name}<br/></Card.Text>
         <Card.Text>Genre Description: {movie.Genre.Description}<br/></Card.Text>
+        
+        <Button className="color-button" onClick={removeFavorite}>
+          Remove from favorites
+        </Button>
+        
+        <Button className="color-button" onClick={addFavorite}>
+          Add to favorites
+        </Button>
+      
+      
         <Link to={`/`}>
         <Button
               className="back-button"
@@ -96,19 +97,8 @@ export const MovieView = ({ movies, user, token, updateUser }) => {
               Back
             </Button>
       </Link>
-      {isFavorite ? (
-            <Button
-              variant="danger"
-              className="back-button ms-2"
-              onClick={removeFavorite}
-            >
-              Remove from favorites
-            </Button>
-          ) : (
-            <Button className="back-button ms-2" onClick={addFavorite}>
-              Add to favorites
-            </Button>
-          )}
+      
+          
       </Card.Body>
     </Card>
     

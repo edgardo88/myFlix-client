@@ -21,8 +21,8 @@ export const MainView = () => {
     const updateUser = (user) => {
       setUser(user);
       localStorage.setItem("user", JSON.stringify(user));
-    };
-
+   };
+   
   
 
     useEffect(() => {
@@ -91,36 +91,40 @@ export const MainView = () => {
                   ) : (
                     <Col md={5}>
                       <LoginView
-                        onLoggedIn={(user, token) => {
+                          onLoggedIn={(user, /*token*/) => {
                           setUser(user);
-                          setToken(token);
-                        }} />
+                          /*setToken(token);*/
+                        }}
+                         />
+                        
                     </Col>
                   )}
                 </>
   
               }
             />
-            <Route
-              path="/profile"
-              element={
-                !user ? (
+
+<Route
+            path="/profile"
+            element={
+              <>
+                {!user ? (
                   <Navigate to="/login" replace />
                 ) : (
-                  <ProfileView
-                    user={user}
-                    token={token}
-                    movies={movies}
-                    onLoggedOut={() => {
-                      setUser(null);
-                      setToken(null);
-                      localStorage.clear();
-                    }}
-                    updateUser={updateUser}
-                  />
-                )
-              }
-            />
+                  <Col>
+                    <ProfileView
+                      user={user}
+                      token={token}
+                      setUser={setUser}
+                      movies={movies}
+                      //onLoggedOut={onLoggedOut}
+                    />
+                  </Col>
+                )}
+              </>
+            }
+          />
+            
             
             <Route
               path="/movies/:movieId"
@@ -132,9 +136,9 @@ export const MainView = () => {
                     <Col>The list is empty!</Col>
                   ) : (
                     <Col md={8}>
-                      <MovieView movies={movies} user={user}
+                      <MovieView movies={movies}/* user={user}
                       token={token}
-                      updateUser={updateUser} />
+                      updateUser={updateUser}*/ />
                     </Col>
                   )}
                 </>
