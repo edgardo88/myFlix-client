@@ -27236,7 +27236,7 @@ const MainView = ()=>{
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _navigationBarJsx.NavigationBar), {
                 user: user,
-                onLoggedOut: (user)=>{
+                onLoggedOut: ()=>{
                     setUser(null);
                     setToken(null);
                     localStorage.clear();
@@ -27273,9 +27273,10 @@ const MainView = ()=>{
                                 }, void 0, false, void 0, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
                                     md: 5,
                                     children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _loginViewJsx.LoginView), {
-                                        onLoggedIn: (user)=>{
+                                        onLoggedIn: (user, token)=>{
                                             setUser(user);
-                                        /*setToken(token);*/ }
+                                            setToken(token);
+                                        }
                                     }, void 0, false, void 0, void 0)
                                 }, void 0, false, void 0, void 0)
                             }, void 0, false)
@@ -27295,6 +27296,7 @@ const MainView = ()=>{
                                         user: user,
                                         token: token,
                                         setUser: setUser,
+                                        updateUser: updateUser,
                                         movies: movies
                                     }, void 0, false, void 0, void 0)
                                 }, void 0, false, void 0, void 0)
@@ -27315,13 +27317,16 @@ const MainView = ()=>{
                                 }, void 0, false, void 0, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _colDefault.default), {
                                     md: 8,
                                     children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieViewJsx.MovieView), {
-                                        movies: movies
+                                        movies: movies,
+                                        user: user,
+                                        token: token,
+                                        setUser: setUser
                                     }, void 0, false, void 0, void 0)
                                 }, void 0, false, void 0, void 0)
                             }, void 0, false)
                         }, void 0, false, {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 129,
+                            lineNumber: 130,
                             columnNumber: 13
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27344,7 +27349,7 @@ const MainView = ()=>{
                             }, void 0, false)
                         }, void 0, false, {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 147,
+                            lineNumber: 149,
                             columnNumber: 13
                         }, undefined)
                     ]
@@ -27392,15 +27397,15 @@ var _reactRouter = require("react-router");
 var _reactRouterDom = require("react-router-dom");
 var _react = require("react");
 var _s = $RefreshSig$();
-const MovieView = ({ movies, user })=>{
+const MovieView = ({ movies, user, token, setUser })=>{
     _s();
     const { movieId } = (0, _reactRouter.useParams)();
     const [isFavorite, setIsFavorite] = (0, _react.useState)(false);
-    /* useEffect(() => {
-    const isFavorited = user.FavoriteMovies.includes(movieId);
-    setIsFavorite(isFavorited);
-  });
-*/ const addFavorite = ()=>{
+    (0, _react.useEffect)(()=>{
+        const isFavorited = user.FavoriteMovies.includes(movieId);
+        setIsFavorite(isFavorited);
+    });
+    const addFavorite = ()=>{
         fetch(`https://og-oyin.onrender.com/users/${user.Username}/movies/${movieId}`, {
             method: "POST",
             headers: {
@@ -27411,9 +27416,9 @@ const MovieView = ({ movies, user })=>{
             if (response.ok) return response.json();
         }).then((data)=>{
             setIsFavorite(true);
-            user.Favorite.push(movieId);
-            localStorage.setItem("user", JSON.stringify(data));
-            setUser(user);
+            user.FavoriteMovies.push(movieId);
+            // localStorage.setItem("user", JSON.stringify(data));
+            setUser(data);
         });
     };
     const removeFavorite = ()=>{
@@ -27427,9 +27432,9 @@ const MovieView = ({ movies, user })=>{
             if (response.ok) return response.json();
         }).then((data)=>{
             setIsFavorite(false);
-            user.Favorite = user.Favorite.filter((id)=>id !== movieId);
+            user.FavoriteMovies = user.FavoriteMovies.filter((id)=>id !== movieId);
             localStorage.setItem("user", JSON.stringify(data));
-            setUser(user);
+            setUser(data);
         });
     };
     const movie = movies.find((b)=>b._id === movieId);
@@ -27524,22 +27529,21 @@ const MovieView = ({ movies, user })=>{
                         lineNumber: 79,
                         columnNumber: 9
                     }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
+                    isFavorite ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
                         className: "color-button",
                         onClick: removeFavorite,
                         children: "Remove from favorites"
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 81,
+                        lineNumber: 82,
                         columnNumber: 9
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
+                    }, undefined) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
                         className: "color-button",
                         onClick: addFavorite,
                         children: "Add to favorites"
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 85,
+                        lineNumber: 86,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
@@ -27554,12 +27558,12 @@ const MovieView = ({ movies, user })=>{
                             children: "Back"
                         }, void 0, false, {
                             fileName: "src/components/movie-view/movie-view.jsx",
-                            lineNumber: 91,
+                            lineNumber: 93,
                             columnNumber: 9
                         }, undefined)
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 90,
+                        lineNumber: 92,
                         columnNumber: 9
                     }, undefined)
                 ]
@@ -27575,7 +27579,7 @@ const MovieView = ({ movies, user })=>{
         columnNumber: 5
     }, undefined);
 };
-_s(MovieView, "9S9kUSlCrLYes4vCnHvEyHVoj/g=", false, function() {
+_s(MovieView, "Eu5S1baMK/gY/xYLj5Nss4rVVBI=", false, function() {
     return [
         (0, _reactRouter.useParams)
     ];

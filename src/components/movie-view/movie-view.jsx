@@ -7,16 +7,16 @@ import {  Button,Card } from "react-bootstrap";
 import { useEffect, useState } from "react";
 
 
-export const MovieView = ({ movies, user, /*token, setUser */}) => {
+export const MovieView = ({ movies, user, token, setUser }) => {
   const { movieId } = useParams();
 
   const [isFavorite, setIsFavorite] = useState(false);
 
-  /* useEffect(() => {
+   useEffect(() => {
     const isFavorited = user.FavoriteMovies.includes(movieId);
     setIsFavorite(isFavorited);
   });
-*/
+
   const addFavorite = () => {
     fetch(
       `https://og-oyin.onrender.com/users/${user.Username}/movies/${movieId}`,
@@ -35,9 +35,9 @@ export const MovieView = ({ movies, user, /*token, setUser */}) => {
       })
       .then((data) => {
         setIsFavorite(true);
-        user.Favorite.push(movieId);
-        localStorage.setItem("user", JSON.stringify(data));
-        setUser(user);
+        user.FavoriteMovies.push(movieId);
+       // localStorage.setItem("user", JSON.stringify(data));
+        setUser(data);
       });
   };
 
@@ -59,9 +59,9 @@ export const MovieView = ({ movies, user, /*token, setUser */}) => {
       })
       .then((data) => {
         setIsFavorite(false);
-        user.Favorite = user.Favorite.filter((id) => id !== movieId);
+        user.FavoriteMovies = user.FavoriteMovies.filter((id) => id !== movieId);
         localStorage.setItem("user", JSON.stringify(data));
-        setUser(user);
+        setUser(data);
       });
   };
   
@@ -78,13 +78,15 @@ export const MovieView = ({ movies, user, /*token, setUser */}) => {
         <Card.Text>Genre: {movie.Genre.Name}<br/></Card.Text>
         <Card.Text>Genre Description: {movie.Genre.Description}<br/></Card.Text>
         
+        {isFavorite ? (
         <Button className="color-button" onClick={removeFavorite}>
           Remove from favorites
         </Button>
-        
+      ) : (
         <Button className="color-button" onClick={addFavorite}>
           Add to favorites
         </Button>
+      )}
       
       
         <Link to={`/`}>

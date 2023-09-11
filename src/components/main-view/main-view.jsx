@@ -59,7 +59,7 @@ export const MainView = () => {
       <BrowserRouter>
       <NavigationBar
                 user={user}
-                onLoggedOut={(user) => {
+                onLoggedOut={() => {
                     setUser(null);
                     setToken(null);
                     localStorage.clear();
@@ -91,9 +91,9 @@ export const MainView = () => {
                   ) : (
                     <Col md={5}>
                       <LoginView
-                          onLoggedIn={(user, /*token*/) => {
+                          onLoggedIn={(user, token) => {
                           setUser(user);
-                          /*setToken(token);*/
+                          setToken(token);
                         }}
                          />
                         
@@ -116,8 +116,9 @@ export const MainView = () => {
                       user={user}
                       token={token}
                       setUser={setUser}
+                      updateUser={updateUser}
                       movies={movies}
-                      //onLoggedOut={onLoggedOut}
+                     // onLoggedOut={onLoggedOut}
                     />
                   </Col>
                 )}
@@ -136,9 +137,10 @@ export const MainView = () => {
                     <Col>The list is empty!</Col>
                   ) : (
                     <Col md={8}>
-                      <MovieView movies={movies}/* user={user}
+                      <MovieView movies={movies}
+                       user={user}
                       token={token}
-                      updateUser={updateUser}*/ />
+                      setUser={setUser} />
                     </Col>
                   )}
                 </>
