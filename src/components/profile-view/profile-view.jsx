@@ -39,7 +39,7 @@ export const ProfileView = ({
       Birthday: birthday,
     };
 
-    fetch(`https://og-oyin.onrender.com/users/${user.id}`, {
+    fetch(`https://og-oyin.onrender.com/users/${user._id}`, {
       method: "PUT",
       body: JSON.stringify(data),
       headers: {
@@ -68,7 +68,7 @@ export const ProfileView = ({
 
   const deleteAccount = () => {
     console.log("doin");
-    fetch(`https://og-oyin.onrender.com/users/${user.id}`, {
+    fetch(`https://og-oyin.onrender.com/users/${user._id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     })

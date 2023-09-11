@@ -10,12 +10,16 @@ import { useEffect, useState } from "react";
 export const MovieView = ({ movies, user, token, setUser }) => {
   const { movieId } = useParams();
 
-  const [isFavorite, setIsFavorite] = useState(false);
+  const movie = movies.find((m) => m._id === movieId);
 
-   useEffect(() => {
-    const isFavorited = user.FavoriteMovies.includes(movieId);
-    setIsFavorite(isFavorited);
-  });
+  const [isFavorite, setIsFavorite] = useState(
+    user.FavoriteMovies.includes(movie._id)
+  );
+
+  useEffect(() => {
+    setIsFavorite(user.FavoriteMovies.includes(movie._id));
+    window.scrollTo(0, 0);
+  }, [movieId]);
 
   const addFavorite = () => {
     fetch(
@@ -65,7 +69,6 @@ export const MovieView = ({ movies, user, token, setUser }) => {
       });
   };
   
-  const movie = movies.find((b) => b._id === movieId);
 
 
   return (
