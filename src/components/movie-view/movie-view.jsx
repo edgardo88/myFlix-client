@@ -40,7 +40,7 @@ export const MovieView = ({ movies, user, token, setUser }) => {
       .then((data) => {
         setIsFavorite(true);
         user.FavoriteMovies.push(movieId);
-       // localStorage.setItem("user", JSON.stringify(data));
+       localStorage.setItem("user", JSON.stringify(data));
         setUser(data);
       });
   };

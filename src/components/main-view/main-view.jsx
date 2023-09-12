@@ -11,7 +11,8 @@ import { ProfileView } from "../profile-view/profile-view.jsx";
 
 
 export const MainView = () => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const storedUser = JSON.parse(localStorage.getItem("user._id"));
+    console.log("user");
     const storedToken = localStorage.getItem("token");
     const [movies, setMovies] = useState([]);
     const [user, setUser] = useState(storedUser? storedUser : null);
@@ -118,7 +119,12 @@ export const MainView = () => {
                       setUser={setUser}
                       updateUser={updateUser}
                       movies={movies}
-                     // onLoggedOut={onLoggedOut}
+                      onLoggedOut={() => {
+                        setUser(null);
+                        setToken(null);
+                        localStorage.clear();
+                    }}
+                    
                     />
                   </Col>
                 )}

@@ -39,7 +39,7 @@ export const ProfileView = ({
       Birthday: birthday,
     };
 
-    fetch(`https://og-oyin.onrender.com/users/${user._id}`, {
+    fetch(`https://og-oyin.onrender.com/users/${user.Username}`, {
       method: "PUT",
       body: JSON.stringify(data),
       headers: {
@@ -68,7 +68,7 @@ export const ProfileView = ({
 
   const deleteAccount = () => {
     console.log("doin");
-    fetch(`https://og-oyin.onrender.com/users/${user._id}`, {
+    fetch(`https://og-oyin.onrender.com/users/${user.Username}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -166,7 +166,7 @@ export const ProfileView = ({
       </Col>
       {favoriteMovies.map((movie) => (
         <Col className="mb-4" key={movie.id} xl={3} lg={3} md={4} xs={6}>
-          <MovieCard movie={movie} />
+          <MovieCard movie={movie} user={user}/>
         </Col>
       ))}
     </>
