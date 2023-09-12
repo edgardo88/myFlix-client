@@ -43471,7 +43471,7 @@ const ProfileView = ({ user, token, movies, onLoggedOut, updateUser })=>{
             Email: email,
             Birthday: birthday
         };
-        fetch(`https://og-oyin.onrender.com/users/${user._id}`, {
+        fetch(`https://og-oyin.onrender.com/users/${user.Username}`, {
             method: "PUT",
             body: JSON.stringify(data),
             headers: {
@@ -43495,7 +43495,7 @@ const ProfileView = ({ user, token, movies, onLoggedOut, updateUser })=>{
     };
     const deleteAccount = ()=>{
         console.log("doin");
-        fetch(`https://og-oyin.onrender.com/users/${user._id}`, {
+        fetch(`https://og-oyin.onrender.com/users/${user.Username}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`
