@@ -8,7 +8,7 @@ import Row from "react-bootstrap/Row";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { NavigationBar } from "./navigation-bar/navigation-bar.jsx";
 import { ProfileView } from "../profile-view/profile-view.jsx";
-
+import { SearchBar } from "../search-bar/search-bar.jsx"; // Import the SearchBar component
 
 export const MainView = () => {
     const storedUser = JSON.parse(localStorage.getItem("user._id"));
@@ -18,6 +18,7 @@ export const MainView = () => {
     const [user, setUser] = useState(storedUser? storedUser : null);
     //const [selectedMovie, setSelectedMovie] = useState(null);
     const [token, setToken] = useState(storedToken? storedToken : null);
+    const [filteredMovies, setFilteredMovies] = useState([]); // State to hold the filtered movies
 
     const updateUser = (user) => {
       setUser(user);
@@ -55,6 +56,14 @@ export const MainView = () => {
             setMovies(moviesFromApi);
           });
     }, [token]);
+
+    // Define the onBackClick function in the MainView component
+  const handleBackClick = () => {};
+
+  // Function to update the filtered movies when the user searches
+  const handleMovieSearch = (filteredMovies) => {
+    setFilteredMovies(filteredMovies);
+  };
 
     return (
       <BrowserRouter>
@@ -146,32 +155,52 @@ export const MainView = () => {
                       <MovieView movies={movies}
                        user={user}
                       token={token}
-                      setUser={setUser} />
+                      setUser={setUser}
+                      onBackClick={handleBackClick} // Pass the callback function as a prop
+                      />
                     </Col>
                   )}
                 </>
               }
             />
             <Route
-              path="/"
-              element={
-                <>
-                  {!user ? (
-                    <Navigate to="/login" replace />
-                  ) : movies.length === 0 ? (
-                    <Col>The list is empty!</Col>
-                  ) : (
-                    <>
-                      {movies.map((movie) => (
+            path="/"
+            element={
+              <>
+                {!user ? (
+                  <Navigate to="/login" replace />
+                ) : movies.length === 0 ? (
+                  <Col>This list is empty!</Col>
+                ) : (
+                  <>
+                    {/* Add the SearchBar component */}
+                    <Col className="mb-4" md={12}>
+                      <SearchBar
+                        movies={movies}
+                        handleMovieSearch={handleMovieSearch} // Pass the callback function
+                      />
+                    </Col>
+                    {filteredMovies.length === 0 ? (
+                      movies.map((movie) => (
                         <Col className="mb-4" key={movie._id} md={3}>
                           <MovieCard movie={movie} />
                         </Col>
-                      ))}
-                    </>
-                  )}
-                </>
-              }
-            />
+                      ))
+                    ) : (
+                      // Render the filtered movies
+                      <>
+                        {filteredMovies.map((movie) => (
+                          <Col className="mb-4" key={movie._id} md={3}>
+                            <MovieCard movie={movie} />
+                          </Col>
+                        ))}
+                      </>
+                    )}
+                  </>
+                )}
+              </>
+            }
+          />
           </Routes>
         </Row>
       </BrowserRouter>
